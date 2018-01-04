@@ -71,4 +71,16 @@ public class InterviewCakeTest {
         assertTrue(root.checkPresentAndAdd("dogood.org"));
     }
 
+    @Test
+    public void testFindingRectangleOverlap_OK() {
+        InterviewCake.Rectangle rec1 = new InterviewCake.Rectangle(1, 1, 6, 3);
+        InterviewCake.Rectangle rec2 = new InterviewCake.Rectangle(5, 2, 3, 6);
+
+        InterviewCake.Rectangle output = InterviewCake.Rectangle.findRectangleOverlap(rec1, rec2);
+        assertEquals(5, output.getLeftX());
+        assertEquals(2, output.getBottomY());
+        assertEquals(2, output.getWidth());
+        assertEquals(2, output.getHeight());
+    }
+
 }
