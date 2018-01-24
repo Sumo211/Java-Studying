@@ -494,4 +494,18 @@ class InterviewCake {
 
     }
 
+    // TODO: 1/24/2018 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/nth-fibonacci">Source</a>
+     * The tradeoff we sometimes have between code cleanliness and efficiency.
+     * Recursive approach <> Iterative approach (Top-down <> Bottom-up)
+     * In general, whenever you have a recursive solution to a problem, think about what's actually happening on the call stack.
+     * An iterative solution might be more efficient.
+     * O(n) time and O(1) space
+     */
+    int computeNthFib(int n) {
+        // TODO: 1/24/2018 self-implemented
+        return 0;
+    }
+
 }
