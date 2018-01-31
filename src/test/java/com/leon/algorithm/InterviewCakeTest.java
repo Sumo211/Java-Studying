@@ -83,4 +83,11 @@ public class InterviewCakeTest {
         assertEquals(2, output.getHeight());
     }
 
+    @Test
+    public void testFindingUniqueDeliveryId_OK() {
+        int[] input = {1, 3, 2, 1, 2};
+        int output = interviewCake.findUniqueDeliveryId(input);
+        assertEquals(3, output);
+    }
+
 }
