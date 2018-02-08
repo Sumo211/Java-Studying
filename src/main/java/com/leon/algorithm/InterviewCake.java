@@ -526,4 +526,66 @@ class InterviewCake {
         return uniqueDeliveryId;
     }
 
+    static class CakeType {
+
+        private int weight;
+
+        private int value;
+
+        CakeType(int weight, int value) {
+            this.weight = weight;
+            this.value = value;
+        }
+
+    }
+
+    // TODO: 2/8/2018 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/cake-thief">Source</a>
+     * This is a classic computer science puzzle called 'the unbounded knapsack problem'.
+     * We use a bottom-up approach to find the max value at our duffel bag's weightCapacity
+     * by finding the max value at every capacity from 0 to weightCapacity.
+     * Sometimes an efficient, good answer might be more practical than an inefficient, optimal answer.
+     * We can look at cake values or value/weight ratios. Those algorithms would probably be faster, taking O(nlgn) time.
+     * If you're struggling with dynamic programming, researching the two main dynamic programming strategies: memoization and going bottom-up.
+     * O(n * k) time and O(k) space where n is number of types of cake and k is the capacity of the duffel bag.
+     */
+    long maxDuffelBagValue(CakeType[] cakeTypes, int weightCapacity) {
+        // we make an array to hold the maximum possible value at every duffel bag weight capacity from 0 to weightCapacity
+        // starting each index with value 0
+        long[] maxValuesAtCapacities = new long[weightCapacity + 1];
+
+        for (int currentCapacity = 0; currentCapacity <= weightCapacity; currentCapacity++) {
+            // set a variable to hold the max monetary value so far for currentCapacity
+            long currentMaxValue = 0;
+
+            for (CakeType cakeType : cakeTypes) {
+                // if a cake weighs 0 and has a positive value, the value of our duffel bag is infinite!
+                if (cakeType.weight == 0 && cakeType.value > 0) {
+                    throw new RuntimeException("Max value is infinity!");
+                }
+
+                // if the current cake weighs as much or less than the current weight capacity
+                // it's possible taking the cake would get a better value
+                if (cakeType.weight <= currentCapacity) {
+                    // so we check: should we use the cake or not?
+                    // if we use the cake, the most kilograms we can include in addition to the cake we're adding is the current capacity minus the cake's weight.
+                    // We find the max value at that integer capacity in our array maxValuesAtCapacities
+                    long maxValueUsingCake = cakeType.value + maxValuesAtCapacities[currentCapacity - cakeType.weight];
+
+                    // now we see if it's worth taking the cake. How does the value with the cake compare to the currentMaxValue?
+                    currentMaxValue = Math.max(currentMaxValue, maxValueUsingCake);
+                }
+            }
+
+            // add each capacity's max value to our array so we can use them when calculating all the remaining capacities
+            maxValuesAtCapacities[currentCapacity] = currentMaxValue;
+        }
+
+        // 1. We know the max value we can carry, but which cakes should we take, and how many?
+        // 2. A cake that's both heavier and worth less than another cake would never be in the optimal solution.
+        // this idea is called 'dominance relations'. Can you apply this idea to save some time?
+        return maxValuesAtCapacities[weightCapacity];
+    }
+
 }
