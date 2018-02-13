@@ -356,13 +356,6 @@ class InterviewCake {
 
     }
 
-    /**
-     * @see <a href="https://www.interviewcake.com/question/java/reverse-linked-list">Source</a>
-     * Even the 'right approach' will fail if done in the 'wrong order'.
-     * Write out a sample linked list and walk through your code by hand, step by step,
-     * running each operation on your sample input to see if the final output is what you expect.
-     * O(n) time and O(1) space
-     */
     static class LinkedListNode {
 
         private int value;
@@ -372,6 +365,13 @@ class InterviewCake {
     }
 
     // TODO: 12/28/2017 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/reverse-linked-list">Source</a>
+     * Even the 'right approach' will fail if done in the 'wrong order'.
+     * Write out a sample linked list and walk through your code by hand, step by step,
+     * running each operation on your sample input to see if the final output is what you expect.
+     * O(n) time and O(1) space
+     */
     LinkedListNode reverse(LinkedListNode headOfList) {
         LinkedListNode currentNode = headOfList;
         LinkedListNode previousNode = null;
@@ -391,6 +391,32 @@ class InterviewCake {
         }
 
         return previousNode;
+    }
+
+    // TODO: 2/13/2018 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/delete-node">Source</a>
+     * But be careful - there are some potential problems with this implementation:
+     * First, it doesn't work for deleting the last node in the list.
+     * Second, this technique can cause some unexpected side-effects:
+     * 1. Any references to the input node have now effectively been reassigned to its next node.
+     * 2. If there are pointers to the input node's original next node, those pointers now point to a 'dangling' node.
+     * In-place operations like this can save time and/or space, but they're risky. In a real system you'd carefully check for side effects in the rest of the code base.
+     * O(1) time and O(1) space
+     */
+    void deleteNode(LinkedListNode nodeToDelete) {
+        // get the input node's next node, the one we want to skip to
+        LinkedListNode nextNode = nodeToDelete.next;
+
+        if (nextNode != null) {
+            // replace the input node's value and pointer with the next node's value and pointer
+            // the previous node now effectively skips over the input node
+            nodeToDelete.value = nextNode.value;
+            nodeToDelete.next = nextNode.next;
+        } else {
+            // eep, we're trying to delete the last node!
+            throw new IllegalArgumentException("Can't delete the last node with this technique!");
+        }
     }
 
     /**
