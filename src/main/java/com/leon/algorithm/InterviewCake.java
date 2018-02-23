@@ -614,4 +614,54 @@ class InterviewCake {
         return maxValuesAtCapacities[weightCapacity];
     }
 
+    // TODO: 2/21/2018 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/shuffle">Source</a>
+     * The shuffle must be 'uniform', meaning each item in the original array must have the same probability of ending up in each spot in the final array.
+     * We choose a random item to move to the first index, then we choose a random other item to move to the second index, etc.
+     * This is a semi-famous algorithm known as the Fisher-Yates shuffle (sometimes called the Knuth shuffle).
+     * O(n) time and O(1) space
+     */
+    void inPlaceShuffle(int[] input) {
+        // if it's 1 or 0 items, just return
+        if (input.length <= 1) {
+            return;
+        }
+
+        // walk through from beginning to end
+        for (int indexWeAreChoosingFor = 0; indexWeAreChoosingFor < input.length - 1; indexWeAreChoosingFor++) {
+            // choose a random not-yet-placed item to place there (could also be the item currently in that spot)
+            // must be an item AFTER the current item, because the stuff before has all already been placed
+            int randomChoiceIndex = getRandom(indexWeAreChoosingFor, input.length - 1);
+
+            // place our random choice in the spot by swapping
+            if (randomChoiceIndex != indexWeAreChoosingFor) {
+                int valueAtIndexWeChooseFor = input[indexWeAreChoosingFor];
+                input[indexWeAreChoosingFor] = input[randomChoiceIndex];
+                input[randomChoiceIndex] = valueAtIndexWeChooseFor;
+            }
+        }
+    }
+
+    // Why the naive solution is non-uniform (some outcomes are more likely than others)?
+    void naiveShuffle(int[] input) {
+        // for each index in the array
+        for (int firstIndex = 0; firstIndex < input.length; firstIndex++) {
+
+            // grab a random other index
+            int secondIndex = getRandom(0, input.length - 1);
+
+            // and swap the values
+            if (secondIndex != firstIndex) {
+                int temp = input[firstIndex];
+                input[firstIndex] = input[secondIndex];
+                input[secondIndex] = temp;
+            }
+        }
+    }
+
+    private int getRandom(int floor, int ceiling) {
+        return new Random().nextInt((ceiling - floor) + 1) + floor;
+    }
+
 }
