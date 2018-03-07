@@ -419,6 +419,87 @@ class InterviewCake {
         }
     }
 
+    // TODO: 3/7/2018 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/kth-to-last-node-in-singly-linked-list">Source</a>
+     * In both cases we have two pointers taking the same steps through our list. The only difference is the order in which the steps are taken. The number of steps is the same either way.
+     * However, the second approach might still be slightly faster, due to some caching and other optimizations that modern processors and memory have.
+     * Both of our algorithms access a lot of nodes in our list twice, so they could exploit this caching. But notice that in our second algorithm there's a much shorter time
+     * between the first and second times that we access a given node (this is sometimes called "temporal locality of reference").
+     * Thus it seems more likely that our second algorithm will save time by using the processor's cache! But this assumes our processor's cache uses something like a "last recently used" replacement policy.
+     * Always ask yourself, "Have I actually changed the number of steps?"
+     * Both approaches use O(n) time and O(1) space. If you're recursing, you're probably taking O(n) space on the call stack!
+     */
+    LinkedListNode kthToLastNode(int k, LinkedListNode head) {
+        //return kthToLastNode_V1(k, head);
+        return kthToLastNode_V2(k, head);
+    }
+
+    /**
+     * we walk one pointer from head to tail (to get the list's length), then walk another pointer from the head node to the target node (the kth to last node)
+     */
+    private LinkedListNode kthToLastNode_V1(int k, LinkedListNode head) {
+        if (k < 1) {
+            throw new IllegalArgumentException("Impossible to find less than first to last node: " + k);
+        }
+
+        // STEP 1: get the length of the list, start at 1, not 0, else we'd fail to count the head node!
+        int listLength = 1;
+        LinkedListNode currentNode = head;
+
+        // traverse the whole list, counting all the nodes
+        while (currentNode.next != null) {
+            listLength++;
+            currentNode = currentNode.next;
+        }
+
+        // if k is greater than the length of the list, there can't be a kth-to-last node, so we'll return an error!
+        if (k > listLength) {
+            throw new IllegalArgumentException("k is larger than the length of the linked list: " + k);
+        }
+
+        // STEP 2: walk to the target node, calculate how far to go, from the head, to get to the kth to last node
+        int howFarToGo = listLength - k;
+        currentNode = head;
+
+        for (int i = 0; i < howFarToGo; i++) {
+            currentNode = currentNode.next;
+        }
+
+        return currentNode;
+    }
+
+    /**
+     * rightNode also walks all the way from head to tail, and leftNode also walks from the head to the target node
+     */
+    private LinkedListNode kthToLastNode_V2(int k, LinkedListNode head) {
+        if (k < 1) {
+            throw new IllegalArgumentException("Impossible to find less than first to last node: " + k);
+        }
+
+        LinkedListNode leftNode = head;
+        LinkedListNode rightNode = head;
+
+        // move rightNode to the kth node
+        for (int i = 0; i < k - 1; i++) {
+
+            // but along the way, if a rightNode doesn't have a next, then k is greater than the length of the list and there can't be a kth-to-last node! we'll raise an error
+            if (rightNode.next == null) {
+                throw new IllegalArgumentException("k is larger than the length of the linked list: " + k);
+            }
+            rightNode = rightNode.next;
+        }
+
+        // starting with leftNode on the head, move leftNode and rightNode down the list, maintaining a distance of k between them, until rightNode hits the end of the list
+        while (rightNode.next != null) {
+            leftNode = leftNode.next;
+            rightNode = rightNode.next;
+        }
+
+        // since leftNode is k nodes behind rightNode, leftNode is now the kth to last node!
+        return leftNode;
+    }
+
     /**
      * @see <a href="https://www.interviewcake.com/question/java/rectangular-love">Source</a>
      * What if there is no intersection?
