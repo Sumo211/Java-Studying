@@ -745,4 +745,47 @@ class InterviewCake {
         return new Random().nextInt((ceiling - floor) + 1) + floor;
     }
 
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/merge-sorted-arrays">Source</a>
+     * We could simply concatenate (join together) the two arrays into one, then sort the result. O(nlgn)
+     * But if our inputs were linked lists, we could avoid allocating a new structure and do the merge by simply adjusting the next pointers in the list nodes!
+     * What if we wanted to merge several sorted arrays?
+     * We spent a lot of time figuring out how to cleanly handle edge cases. Think about edge cases. Look for off-by-one errors.
+     * O(n) time and O(n) additional space, where n is the number of items in the merged array.
+     */
+    int[] mergeArrays(int[] firstArray, int[] secondArray) {
+        // set up our mergedArray
+        int[] mergedArray = new int[firstArray.length + secondArray.length];
+
+        int currentIndexOfFirstArray = 0;
+        int currentIndexOfSecondArray = 0;
+        int currentIndexOfMergedArray = 0;
+
+        while (currentIndexOfMergedArray < mergedArray.length) {
+            boolean isFirstArrayExhausted = currentIndexOfFirstArray >= firstArray.length;
+            boolean isSecondArrayExhausted = currentIndexOfSecondArray >= secondArray.length;
+
+            // case: next comes from first array
+            // first array must not be exhausted, and EITHER:
+            // 1) second array IS exhausted, or
+            // 2) the current element in first array is less than the current element in second array
+            if (!isFirstArrayExhausted && (isSecondArrayExhausted || firstArray[currentIndexOfFirstArray] < secondArray[currentIndexOfSecondArray])) {
+
+                mergedArray[currentIndexOfMergedArray] = firstArray[currentIndexOfFirstArray];
+                currentIndexOfFirstArray++;
+
+            // case: next comes from second array
+            } else {
+
+                mergedArray[currentIndexOfMergedArray] = secondArray[currentIndexOfSecondArray];
+                currentIndexOfSecondArray++;
+
+            }
+
+            currentIndexOfMergedArray++;
+        }
+
+        return mergedArray;
+    }
+
 }

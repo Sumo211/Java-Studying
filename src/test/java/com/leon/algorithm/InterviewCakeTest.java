@@ -90,4 +90,13 @@ public class InterviewCakeTest {
         assertEquals(3, output);
     }
 
+    @Test
+    public void testMergingTwoSortedArrays_OK() {
+        int[] firstArray = new int[]{3, 4, 6, 10, 11, 15};
+        int[] secondArray = new int[]{1, 5, 8, 12, 14, 19};
+
+        int[] expected = new int[]{1, 3, 4, 5, 6, 8, 10, 11, 12, 14, 15, 19};
+        assertArrayEquals(expected, interviewCake.mergeArrays(firstArray, secondArray));
+    }
+
 }
