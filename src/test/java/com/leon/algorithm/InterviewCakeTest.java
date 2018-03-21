@@ -99,4 +99,10 @@ public class InterviewCakeTest {
         assertArrayEquals(expected, interviewCake.mergeArrays(firstArray, secondArray));
     }
 
+    @Test
+    public void testIsBracketValid_OK() {
+        String input = "{ [ ( ] ) }";
+        assertFalse(interviewCake.isBracketValid(input));
+    }
+
 }

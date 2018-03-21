@@ -788,4 +788,42 @@ class InterviewCake {
         return mergedArray;
     }
 
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/bracket-validator">Source</a>
+     * When choosing a data structure, we should start by deciding on the properties we want
+     * Two common uses for stacks are:
+     * 1. parsing (like in this problem)
+     * 2. tree or graph traversal (like depth-first traversal)
+     * O(n) time and O(n) space (in the worst case, all of our characters are openers, so we push them all onto the stack)
+     */
+    boolean isBracketValid(String input) {
+        Map<Character, Character> openersToClosers = new HashMap<>();
+        openersToClosers.put('[', ']');
+        openersToClosers.put('{', '}');
+        openersToClosers.put('(', ')');
+
+        Set<Character> openers = openersToClosers.keySet();
+        Set<Character> closers = new HashSet<>(openersToClosers.values());
+
+        Stack<Character> openersStack = new Stack<>();
+        for (char c : input.toCharArray()) {
+            if (openers.contains(c)) {
+                openersStack.push(c);
+            } else if (closers.contains(c)) {
+                if (openersStack.empty()) {
+                    return false;
+                } else {
+                    char lastUnclosedOpener = openersStack.pop();
+
+                    // if this closer doesn't correspond to the most recently seen unclosed opener, short-circuit, returning false
+                    if (c != (openersToClosers.get(lastUnclosedOpener))) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return openersStack.empty();
+    }
+
 }
