@@ -826,4 +826,72 @@ class InterviewCake {
         return openersStack.empty();
     }
 
+    static class BinaryTreeNode {
+
+        int value;
+
+        BinaryTreeNode leftNode;
+
+        BinaryTreeNode rightNode;
+
+        BinaryTreeNode(int value) {
+            this.value = value;
+        }
+
+        BinaryTreeNode insertLeftNode(int value) {
+            this.leftNode = new BinaryTreeNode(value);
+            return this.leftNode;
+        }
+
+        BinaryTreeNode insertRightNode(int value) {
+            this.rightNode = new BinaryTreeNode(value);
+            return this.rightNode;
+        }
+
+    }
+
+    private int findLargest(BinaryTreeNode rootNode) {
+        BinaryTreeNode currentNode = rootNode;
+        while (currentNode.rightNode != null) {
+            currentNode = currentNode.rightNode;
+        }
+
+        return currentNode.value;
+    }
+
+    // TODO: 3/28/2018 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/second-largest-item-in-bst">Source</a>
+     * We used a 'simplify, solve, and adapt' strategy.
+     * The question asks for a method to find the second largest element in a BST, so we started off by simplifying the problem: we thought about how to find the first largest element.
+     * Once we had a strategy for that, we adapted that strategy to work for finding the second largest element.
+     * It may seem counter-intuitive to start off by solving the wrong question. But starting off with a simpler version of the problem is often much faster, because it's easier to wrap our heads around right away.
+     * 'Breaking things down into cases' is another strategy that really helped us here.
+     * Notice how simple finding the second largest node got when we divided it into two cases:
+     * 1. The largest node has a left subtree.
+     * 2. The largest node does not have a left subtree.
+     * Whenever a problem is starting to feel complicated, try breaking it down into cases.
+     * O(h) where h is the height of the tree (that's O(lgn) if the tree is balanced, O(n) otherwise) and O(1) space.
+     */
+    int findSecondLargest(BinaryTreeNode rootNode) {
+        if (rootNode == null || (rootNode.leftNode == null && rootNode.rightNode == null)) {
+            throw new IllegalArgumentException("Tree must have at least 2 nodes");
+        }
+
+        BinaryTreeNode currentNode = rootNode;
+        while (true) {
+            // case: current is largest and has a left subtree => 2nd largest is the largest in that subtree
+            if (currentNode.leftNode != null && currentNode.rightNode == null) {
+                return findLargest(currentNode.leftNode);
+            }
+
+            // case: current is parent of largest, and largest has no children, so current is 2nd largest
+            if (currentNode.rightNode != null && (currentNode.rightNode.leftNode == null && currentNode.rightNode.rightNode == null)) {
+                return currentNode.value;
+            }
+
+            currentNode = currentNode.rightNode;
+        }
+    }
+
 }
