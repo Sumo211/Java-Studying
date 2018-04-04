@@ -894,4 +894,84 @@ class InterviewCake {
         }
     }
 
+    static class GraphNode {
+
+        private String label;
+
+        private Set<GraphNode> neighbours;
+
+        private Optional<String> color;
+
+        GraphNode(String label) {
+            this.label = label;
+            neighbours = new HashSet<>();
+            color = Optional.empty();
+        }
+
+        String getLabel() {
+            return label;
+        }
+
+        boolean hasColor() {
+            return color.isPresent();
+        }
+
+        String getColor() {
+            return color.get();
+        }
+
+        void setColor(String color) {
+            this.color = Optional.ofNullable(color);
+        }
+
+        Set<GraphNode> getNeighbours() {
+            return Collections.unmodifiableSet(neighbours);
+        }
+
+        void setNeighbours(GraphNode neighbour) {
+            neighbours.add(neighbour);
+        }
+
+    }
+
+    // TODO: 4/4/2018 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/graph-coloring">Source</a>
+     * Sometimes stopping a loop is just a premature optimization that doesn't bring down the final runtime, but sometimes it actually mades the runtime linear!
+     * O(N + M) time where N is the number of nodes and M is the number of edges.
+     * 1. We check if each node appears in its own hash set of neighbors. Checking if something is in a hash set is O(1), so doing it for all N nodes is O(N).
+     * 2. When we get the illegal colors for each node, we iterate through that node's neighbors.
+     * So in total, we cross each of the graphs M edges twice: once for the node on either end of each edge. O(M) time.
+     * 3. When we assign a color to each node, we're careful to stop checking colors as soon as we find one that works.
+     * In the worst case, we'll have to check one more color than the total number of neighbors.
+     * Again, each edge in the graph adds two neighbors—one for the node on either end—so there are 2 * M neighbors.
+     * So, in total, we'll have to try O(N + M) colors.
+     * In the worst case, all the neighbors of a node with the maximum degree (D) have different colors, so our hash set takes up O(D) space.
+     */
+    void colorGraph(GraphNode[] graph, String[] colors) {
+        for (GraphNode node : graph) {
+            Set<GraphNode> neighbours = node.getNeighbours();
+
+            if (neighbours.contains(node)) {
+                throw new IllegalArgumentException(String.format("Legal coloring impossible for node with loop: %s", node.getLabel()));
+            }
+
+            // get the node's neighbors' colors, as a set so we can check if a color is illegal in constant time
+            Set<String> illegalColors = new HashSet<>();
+            for (GraphNode neighbour : neighbours) {
+                if (neighbour.hasColor()) {
+                    illegalColors.add(neighbour.getColor());
+                }
+            }
+
+            // assign the first legal color
+            for (String color : colors) {
+                if (!illegalColors.contains(color)) {
+                    node.setColor(color);
+                    break;
+                }
+            }
+        }
+    }
+
 }
