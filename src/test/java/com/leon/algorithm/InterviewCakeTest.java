@@ -105,4 +105,14 @@ public class InterviewCakeTest {
         assertFalse(interviewCake.isBracketValid(input));
     }
 
+    @Test
+    public void testReverseWords_OK() {
+        char[] input = { 'c', 'a', 'k', 'e', ' ',
+                'p', 'o', 'u', 'n', 'd', ' ',
+                's', 't', 'e', 'a', 'l' };
+
+        interviewCake.reserveWords(input);
+        assertEquals("steal pound cake", new String(input));
+    }
+
 }
