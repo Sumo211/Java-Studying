@@ -500,6 +500,33 @@ class InterviewCake {
         return leftNode;
     }
 
+    // TODO: 4/25/2108 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/linked-list-cycles">Source</a>
+     * The coding interview is a dialogue.
+     * One of the most impressive things you can do as a candidate is listen to a hint, fully understand it, and take it to its next logical step.
+     * O(n) time and O(1) space (fastRunner can never skip over slowRunner => Using a proof by contradiction)
+     */
+    boolean containCycle(LinkedListNode root) {
+        // start both runners at the beginning
+        LinkedListNode fastRunner = root;
+        LinkedListNode slowRunner = root;
+
+        // until we hit the end of the list
+        while (fastRunner != null && fastRunner.next != null) {
+            slowRunner = slowRunner.next;
+            fastRunner = fastRunner.next.next;
+
+            // case: fastRunner is about to "lap" slowRunner
+            if (slowRunner == fastRunner) {
+                return true;
+            }
+        }
+
+        // case: fastRunner hit the end of the list
+        return false;
+    }
+
     /**
      * @see <a href="https://www.interviewcake.com/question/java/rectangular-love">Source</a>
      * What if there is no intersection?
