@@ -1036,4 +1036,41 @@ class InterviewCake {
         }
     }
 
+    // TODO: 5/3/2018 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/largest-stack">Source</a>
+     * Sometimes the first step in algorithm design is deciding what we're optimizing for. Start by considering the expected characteristics of the input.
+     * O(1) time for push(), pop(), and getMax(). O(m) additional space, where m is the number of operations performed on the stack.
+     */
+    static class MaxStack {
+
+        private Stack<Integer> stack = new Stack<>();
+
+        private Stack<Integer> maxesStack = new Stack<>();
+
+        // Add a new item to the top of our stack. If the item is greater than or equal to the last item in maxesStack, it's the new max! So we'll add it to maxesStack.
+        void push(int item) {
+            stack.push(item);
+            if (maxesStack.empty() || maxesStack.peek() <= item) {
+                maxesStack.push(item);
+            }
+        }
+
+        // Remove and return the top item from our stack. If it equals the top item in maxesStack, they must have been pushed in together. So we'll pop it out of maxesStack too.
+        int pop() {
+            int item = stack.pop();
+            if (item == maxesStack.peek()) {
+                maxesStack.pop();
+            }
+
+            return item;
+        }
+
+        // The last item in maxesStack is the max item in our stack.
+        int getMax() {
+            return maxesStack.peek();
+        }
+
+    }
+
 }
