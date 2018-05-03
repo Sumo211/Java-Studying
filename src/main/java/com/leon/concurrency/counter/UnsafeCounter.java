@@ -1,4 +1,4 @@
-package com.leon.concurrency;
+package com.leon.concurrency.counter;
 
 public class UnsafeCounter implements Counter {
 

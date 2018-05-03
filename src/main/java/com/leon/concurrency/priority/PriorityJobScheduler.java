@@ -1,4 +1,4 @@
-package com.leon.concurrency;
+package com.leon.concurrency.priority;
 
 import java.util.Comparator;
 import java.util.concurrent.ExecutorService;
@@ -14,7 +14,7 @@ public class PriorityJobScheduler {
 
     private PriorityBlockingQueue<Job> priorityQueue;
 
-    PriorityJobScheduler(int poolSize, int queueSize) {
+    public PriorityJobScheduler(int poolSize, int queueSize) {
         priorityJobPoolExecutor = Executors.newFixedThreadPool(poolSize);
         priorityQueue = new PriorityBlockingQueue<>(queueSize, Comparator.comparing(Job::getJobPriority));
 

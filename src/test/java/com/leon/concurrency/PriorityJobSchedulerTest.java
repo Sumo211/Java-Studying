@@ -1,5 +1,8 @@
 package com.leon.concurrency;
 
+import com.leon.concurrency.priority.Job;
+import com.leon.concurrency.priority.JobPriority;
+import com.leon.concurrency.priority.PriorityJobScheduler;
 import org.junit.Before;
 import org.junit.Test;
 

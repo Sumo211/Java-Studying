@@ -1,4 +1,4 @@
-package com.leon.concurrency;
+package com.leon.concurrency.priority;
 
 import lombok.Data;
 
@@ -9,11 +9,11 @@ public class Job implements Runnable {
 
     private JobPriority jobPriority;
 
-    Job(String jobName) {
+    public Job(String jobName) {
         this(jobName, JobPriority.MEDIUM);
     }
 
-    Job(String jobName, JobPriority jobPriority) {
+    public Job(String jobName, JobPriority jobPriority) {
         this.jobName = jobName;
         this.jobPriority = jobPriority;
     }

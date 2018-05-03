@@ -1,4 +1,4 @@
-package com.leon.concurrency;
+package com.leon.concurrency.counter;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
