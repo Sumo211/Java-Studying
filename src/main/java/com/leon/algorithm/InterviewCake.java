@@ -1073,4 +1073,42 @@ class InterviewCake {
 
     }
 
+    // TODO: 5/8/2018 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/queue-two-stacks">Source</a>
+     * Each enqueue is clearly O(1) time, and so is each dequeue when outStack has items. Dequeue on an empty outStack is order of the number of items in inStack at that moment.
+     * The more expensive a dequeue on an empty outStack is, the more O(1)-time dequeues off of a non-empty outStack it wins us in the future.
+     * Our total cost per item is O(1). Our m enqueue and dequeue operations put m or fewer items into the system, giving a total runtime of O(m).
+     * The trick is to think of the cost per item passing through our queue, rather than the cost per enqueue() and dequeue().
+     * This trick generally comes in handy when you're looking at the time cost of not just one call, but 'm' calls.
+     */
+    static class QueueTwoStacks {
+
+        private Stack<Integer> inStack = new Stack<>();
+
+        private Stack<Integer> outStack = new Stack<>();
+
+        void enqueue(int item) {
+            inStack.push(item);
+        }
+
+        int dequeue() {
+            if (outStack.empty()) {
+                // Move items from inStack to outStack, reversing order
+                while (!inStack.empty()) {
+                    int newestInStackItem = inStack.pop();
+                    outStack.push(newestInStackItem);
+                }
+
+                // If outStack is still empty, raise an error
+                if (outStack.empty()) {
+                    throw new NoSuchElementException("Can't dequeue from empty queue!");
+                }
+            }
+
+            return outStack.pop();
+        }
+
+    }
+
 }
