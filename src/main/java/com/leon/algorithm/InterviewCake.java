@@ -921,6 +921,74 @@ class InterviewCake {
         }
     }
 
+    // TODO: 5/23/2018 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/balanced-binary-tree">Source</a>
+     * Sometimes it's good to start by rephrasing or 'simplifying' the problem.
+     * Focus on depth-first vs breadth-first traversal, the differences between the two and the strengths and weaknesses of each.
+     * One tip: Remember that breadth-first uses a queue and depth-first uses a stack.
+     * O(n) time and O(n) space.
+     */
+    static boolean isSuperBalanced(BinaryTreeNode rootNode) {
+        // a tree with no nodes is superbalanced, since there are no leaves!
+        if (rootNode == null) {
+            return true;
+        }
+
+        // we short-circuit as soon as we find more than 2
+        List<Integer> depths = new ArrayList<>(3);
+
+        // nodes will store pairs of a node and the node's depth
+        Stack<NodeDepthPair> nodes = new Stack<>();
+        nodes.push(new NodeDepthPair(rootNode, 0));
+
+        while (!nodes.empty()) {
+            // pop a node and its depth from the top of our stack
+            NodeDepthPair current = nodes.pop();
+            BinaryTreeNode node = current.node;
+            int depth = current.depth;
+
+            // case: we found a leaf
+            if (node.leftNode == null && node.rightNode == null) {
+                // we only care if it's a new depth
+                if (!depths.contains(depth)) {
+                    depths.add(depth);
+
+                    // two ways we might now have an unbalanced tree:
+                    // 1) more than 2 different leaf depths
+                    // 2) 2 leaf depths that are more than 1 apart
+                    if (depths.size() > 2 || (depths.size() == 2 && Math.abs(depths.get(1) - depths.get(0)) > 1)) {
+                        return false;
+                    }
+                }
+            // case: this isn't a leaf - keep stepping down
+            } else {
+                if (node.leftNode != null) {
+                    nodes.push(new NodeDepthPair(node.leftNode, depth + 1));
+                }
+
+                if (node.rightNode != null) {
+                    nodes.push(new NodeDepthPair(node.rightNode, depth + 1));
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private static class NodeDepthPair {
+
+        private BinaryTreeNode node;
+
+        private int depth;
+
+        NodeDepthPair(BinaryTreeNode node, int depth) {
+            this.node = node;
+            this.depth = depth;
+        }
+
+    }
+
     static class GraphNode {
 
         private String label;
