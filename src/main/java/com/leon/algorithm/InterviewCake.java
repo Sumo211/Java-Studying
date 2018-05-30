@@ -929,7 +929,7 @@ class InterviewCake {
      * One tip: Remember that breadth-first uses a queue and depth-first uses a stack.
      * O(n) time and O(n) space.
      */
-    static boolean isSuperBalanced(BinaryTreeNode rootNode) {
+    boolean isSuperBalanced(BinaryTreeNode rootNode) {
         // a tree with no nodes is superbalanced, since there are no leaves!
         if (rootNode == null) {
             return true;
@@ -976,6 +976,62 @@ class InterviewCake {
         return true;
     }
 
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/bst-checker">Source</a>
+     * Depth-first traversal of a tree uses memory proportional to the depth of the tree, while breadth-first traversal uses memory proportional to the breadth of the tree.
+     * Because the tree's breadth can as much as double each time it gets one level deeper, depth-first traversal is likely to be more space-efficient than breadth-first traversal.
+     * Instead, the point is to recognize the underlying patterns behind algorithms, so we can get better at thinking through problems.
+     * Sometimes we'll have to kinda smoosh together two or more different patterns to get our answer. (greedy and divide-and-conquer approach in this case)
+     * O(n) time and O(n) space.
+     */
+    boolean isBinarySearchTree(BinaryTreeNode rootNode) {
+        // start at the root, with an arbitrarily low lower bound and an arbitrarily high upper bound
+        Stack<NodeBounds> nodeBoundsStack = new Stack<>();
+        nodeBoundsStack.push(new NodeBounds(rootNode, Integer.MIN_VALUE, Integer.MAX_VALUE));
+
+        // depth-first traversal
+        while (!nodeBoundsStack.empty()) {
+            NodeBounds nodeBounds = nodeBoundsStack.pop();
+            BinaryTreeNode node = nodeBounds.node;
+            int lowerBound = nodeBounds.lowerBound;
+            int upperBound = nodeBounds.upperBound;
+
+            // if this node is invalid, we return false right away
+            if (node.value <= lowerBound || node.value >= upperBound) {
+                return false;
+            }
+
+            if (node.leftNode != null) {
+                // this node must be less than the current node
+                nodeBoundsStack.push(new NodeBounds(node.leftNode, lowerBound, node.value));
+            }
+
+            if (node.rightNode != null) {
+                // this node must be greater than the current node
+                nodeBoundsStack.push(new NodeBounds(node.rightNode, node.value, upperBound));
+            }
+        }
+
+        // if none of the nodes were invalid, return true (at this point we have checked all nodes)
+        return true;
+    }
+
+    boolean isBSTRecursive(BinaryTreeNode rootNode) {
+        return isBSTRecursive(rootNode, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    private boolean isBSTRecursive(BinaryTreeNode rootNode, int lowerBound, int upperBound) {
+        if (rootNode == null) {
+            return true;
+        }
+
+        if (rootNode.value >= upperBound || rootNode.value <= lowerBound) {
+            return false;
+        }
+
+        return isBSTRecursive(rootNode.leftNode, lowerBound, rootNode.value) && isBSTRecursive(rootNode.rightNode, rootNode.value, upperBound);
+    }
+
     private static class NodeDepthPair {
 
         private BinaryTreeNode node;
@@ -985,6 +1041,22 @@ class InterviewCake {
         NodeDepthPair(BinaryTreeNode node, int depth) {
             this.node = node;
             this.depth = depth;
+        }
+
+    }
+
+    private static class NodeBounds {
+
+        private BinaryTreeNode node;
+
+        private int lowerBound;
+
+        private int upperBound;
+
+        NodeBounds(BinaryTreeNode node, int lowerBound, int upperBound) {
+            this.node = node;
+            this.lowerBound = lowerBound;
+            this.upperBound = upperBound;
         }
 
     }
