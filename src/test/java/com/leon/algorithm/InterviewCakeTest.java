@@ -1,5 +1,6 @@
 package com.leon.algorithm;
 
+import com.leon.structure.BinaryTreeNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -73,10 +74,10 @@ public class InterviewCakeTest {
 
     @Test
     public void testFindingRectangleOverlap_OK() {
-        InterviewCake.Rectangle rec1 = new InterviewCake.Rectangle(1, 1, 6, 3);
-        InterviewCake.Rectangle rec2 = new InterviewCake.Rectangle(5, 2, 3, 6);
+        Rectangle rec1 = new Rectangle(1, 1, 6, 3);
+        Rectangle rec2 = new Rectangle(5, 2, 3, 6);
 
-        InterviewCake.Rectangle output = InterviewCake.Rectangle.findRectangleOverlap(rec1, rec2);
+        Rectangle output = Rectangle.findRectangleOverlap(rec1, rec2);
         assertEquals(5, output.getLeftX());
         assertEquals(2, output.getBottomY());
         assertEquals(2, output.getWidth());
@@ -107,9 +108,9 @@ public class InterviewCakeTest {
 
     @Test
     public void testReverseWords_OK() {
-        char[] input = { 'c', 'a', 'k', 'e', ' ',
+        char[] input = {'c', 'a', 'k', 'e', ' ',
                 'p', 'o', 'u', 'n', 'd', ' ',
-                's', 't', 'e', 'a', 'l' };
+                's', 't', 'e', 'a', 'l'};
 
         interviewCake.reserveWords(input);
         assertEquals("steal pound cake", new String(input));
@@ -117,17 +118,17 @@ public class InterviewCakeTest {
 
     @Test
     public void testIsBinarySearchTree_OK() {
-        InterviewCake.BinaryTreeNode root = new InterviewCake.BinaryTreeNode(50);
-        InterviewCake.BinaryTreeNode node_1 = root.insertLeftNode(30);
-        InterviewCake.BinaryTreeNode node_2 = root.insertRightNode(80);
-        InterviewCake.BinaryTreeNode node_3 = node_1.insertLeftNode(20);
-        InterviewCake.BinaryTreeNode leaf_1 = node_1.insertRightNode(40);
-        InterviewCake.BinaryTreeNode leaf_2 = node_3.insertLeftNode(10);
-        InterviewCake.BinaryTreeNode node_4 = node_2.insertLeftNode(70);
-        InterviewCake.BinaryTreeNode leaf_3 = node_4.insertLeftNode(60);
-        InterviewCake.BinaryTreeNode node_5 = node_2.insertRightNode(90);
-        InterviewCake.BinaryTreeNode leaf_4 = node_5.insertLeftNode(85);
-        InterviewCake.BinaryTreeNode leaf_5 = node_5.insertRightNode(100);
+        BinaryTreeNode root = new BinaryTreeNode(50);
+        BinaryTreeNode node_1 = root.insertLeftNode(30);
+        BinaryTreeNode node_2 = root.insertRightNode(80);
+        BinaryTreeNode node_3 = node_1.insertLeftNode(20);
+        BinaryTreeNode leaf_1 = node_1.insertRightNode(40);
+        BinaryTreeNode leaf_2 = node_3.insertLeftNode(10);
+        BinaryTreeNode node_4 = node_2.insertLeftNode(70);
+        BinaryTreeNode leaf_3 = node_4.insertLeftNode(60);
+        BinaryTreeNode node_5 = node_2.insertRightNode(90);
+        BinaryTreeNode leaf_4 = node_5.insertLeftNode(85);
+        BinaryTreeNode leaf_5 = node_5.insertRightNode(100);
         assertTrue(interviewCake.isBinarySearchTree(root));
     }
 

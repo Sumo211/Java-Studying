@@ -1,5 +1,10 @@
 package com.leon.algorithm;
 
+import com.leon.structure.BinaryTreeNode;
+import com.leon.structure.GraphNode;
+import com.leon.structure.LinkedListNode;
+import com.leon.structure.TrieNode;
+
 import java.util.*;
 
 class InterviewCake {
@@ -299,28 +304,6 @@ class InterviewCake {
      * That gave us the idea to treat each character as a common prefix.
      * Starting with a small optimization and asking, "How can we take this same 'idea' even further?"—is hugely powerful.
      */
-    static class TrieNode {
-
-        private Map<Character, TrieNode> nodeChildren;
-
-        TrieNode() {
-            this.nodeChildren = new HashMap<>();
-        }
-
-        public boolean hasChildNode(char character) {
-            return this.nodeChildren.containsKey(character);
-        }
-
-        public void makeChildNode(char character) {
-            this.nodeChildren.put(character, new TrieNode());
-        }
-
-        public TrieNode getChildNode(char character) {
-            return this.nodeChildren.get(character);
-        }
-
-    }
-
     static class Trie {
 
         private TrieNode rootNode;
@@ -331,7 +314,7 @@ class InterviewCake {
             this.rootNode = new TrieNode();
         }
 
-        public boolean checkPresentAndAdd(String word) {
+        boolean checkPresentAndAdd(String word) {
             TrieNode currentNode = rootNode;
             boolean isNewWord = false;
 
@@ -356,14 +339,6 @@ class InterviewCake {
 
     }
 
-    static class LinkedListNode {
-
-        private int value;
-
-        private LinkedListNode next;
-
-    }
-
     // TODO: 12/28/2017 Write unit tests
     /**
      * @see <a href="https://www.interviewcake.com/question/java/reverse-linked-list">Source</a>
@@ -375,15 +350,15 @@ class InterviewCake {
     LinkedListNode reverse(LinkedListNode headOfList) {
         LinkedListNode currentNode = headOfList;
         LinkedListNode previousNode = null;
-        LinkedListNode nextNode = null;
+        LinkedListNode nextNode;
 
         // until we have 'fallen off' the end of the list
         while (currentNode != null) {
             // copy a pointer to the next element before we overwrite current.next
-            nextNode = currentNode.next;
+            nextNode = currentNode.getNext();
 
             // reverse the 'next' pointer
-            currentNode.next = previousNode;
+            currentNode.setNext(previousNode);
 
             // step forward in the list
             previousNode = currentNode;
@@ -406,13 +381,13 @@ class InterviewCake {
      */
     void deleteNode(LinkedListNode nodeToDelete) {
         // get the input node's next node, the one we want to skip to
-        LinkedListNode nextNode = nodeToDelete.next;
+        LinkedListNode nextNode = nodeToDelete.getNext();
 
         if (nextNode != null) {
             // replace the input node's value and pointer with the next node's value and pointer
             // the previous node now effectively skips over the input node
-            nodeToDelete.value = nextNode.value;
-            nodeToDelete.next = nextNode.next;
+            nodeToDelete.setValue(nextNode.getValue());
+            nodeToDelete.setNext(nextNode.getNext());
         } else {
             // eep, we're trying to delete the last node!
             throw new IllegalArgumentException("Can't delete the last node with this technique!");
@@ -448,9 +423,9 @@ class InterviewCake {
         LinkedListNode currentNode = head;
 
         // traverse the whole list, counting all the nodes
-        while (currentNode.next != null) {
+        while (currentNode.getNext() != null) {
             listLength++;
-            currentNode = currentNode.next;
+            currentNode = currentNode.getNext();
         }
 
         // if k is greater than the length of the list, there can't be a kth-to-last node, so we'll return an error!
@@ -463,7 +438,7 @@ class InterviewCake {
         currentNode = head;
 
         for (int i = 0; i < howFarToGo; i++) {
-            currentNode = currentNode.next;
+            currentNode = currentNode.getNext();
         }
 
         return currentNode;
@@ -484,16 +459,16 @@ class InterviewCake {
         for (int i = 0; i < k - 1; i++) {
 
             // but along the way, if a rightNode doesn't have a next, then k is greater than the length of the list and there can't be a kth-to-last node! we'll raise an error
-            if (rightNode.next == null) {
+            if (rightNode.getNext() == null) {
                 throw new IllegalArgumentException("k is larger than the length of the linked list: " + k);
             }
-            rightNode = rightNode.next;
+            rightNode = rightNode.getNext();
         }
 
         // starting with leftNode on the head, move leftNode and rightNode down the list, maintaining a distance of k between them, until rightNode hits the end of the list
-        while (rightNode.next != null) {
-            leftNode = leftNode.next;
-            rightNode = rightNode.next;
+        while (rightNode.getNext() != null) {
+            leftNode = leftNode.getNext();
+            rightNode = rightNode.getNext();
         }
 
         // since leftNode is k nodes behind rightNode, leftNode is now the kth to last node!
@@ -513,9 +488,9 @@ class InterviewCake {
         LinkedListNode slowRunner = root;
 
         // until we hit the end of the list
-        while (fastRunner != null && fastRunner.next != null) {
-            slowRunner = slowRunner.next;
-            fastRunner = fastRunner.next.next;
+        while (fastRunner != null && fastRunner.getNext() != null) {
+            slowRunner = slowRunner.getNext();
+            fastRunner = fastRunner.getNext().getNext();
 
             // case: fastRunner is about to "lap" slowRunner
             if (slowRunner == fastRunner) {
@@ -525,107 +500,6 @@ class InterviewCake {
 
         // case: fastRunner hit the end of the list
         return false;
-    }
-
-    /**
-     * @see <a href="https://www.interviewcake.com/question/java/rectangular-love">Source</a>
-     * What if there is no intersection?
-     * What if one rectangle is entirely contained in the other?
-     * What if the rectangles don't really intersect but share an edge?
-     * Do some parts of your method seem very similar? Can they be refactored so you repeat yourself less?
-     * The hard part isn't the time or space optimization—it's getting something that works and is readable.
-     * To keep your thoughts clear and avoid bugs, take time to:
-     * 1. Think up and draw out all the possible cases.
-     * 2. Use very specific and descriptive variable names.
-     * O(1) time and O(1) space
-     */
-    static class Rectangle {
-
-        // coordinates of bottom left corner
-        private int leftX;
-
-        private int bottomY;
-
-        // dimensions
-        private int width;
-
-        private int height;
-
-        Rectangle(int leftX, int bottomY, int width, int height) {
-            this.leftX = leftX;
-            this.bottomY = bottomY;
-            this.width = width;
-            this.height = height;
-        }
-
-        int getLeftX() {
-            return leftX;
-        }
-
-        int getBottomY() {
-            return bottomY;
-        }
-
-        int getWidth() {
-            return width;
-        }
-
-        int getHeight() {
-            return height;
-        }
-
-        private static RangeOverlap findRangeOverlap(int point1, int length1, int point2, int length2) {
-            // find the highest start point and lowest end point
-            // the highest ("rightmost" or "upmost") start point is the start point of the overlap
-            // the lowest end point is the end point of the overlap
-            int highestStartPoint = Math.max(point1, point2);
-            int lowestEndPoint = Math.min(point1 + length1, point2 + length2);
-
-            // return empty overlap if there is no overlap
-            if (highestStartPoint >= lowestEndPoint) {
-                return new RangeOverlap(0, 0);
-            }
-
-            // compute the overlap length
-            int overlapLength = lowestEndPoint - highestStartPoint;
-
-            return new RangeOverlap(highestStartPoint, overlapLength);
-        }
-
-        static Rectangle findRectangleOverlap(Rectangle rec1, Rectangle rec2) {
-            // get the x and y overlap points and lengths
-            RangeOverlap xOverlap = findRangeOverlap(rec1.getLeftX(), rec1.getWidth(), rec2.getLeftX(), rec2.getWidth());
-            RangeOverlap yOverlap = findRangeOverlap(rec1.getBottomY(), rec1.getHeight(), rec2.getBottomY(), rec2.getHeight());
-
-            // return "zero" rectangle if there is no overlap
-            if (xOverlap.getLength() == 0 || yOverlap.getLength() == 0) {
-                return new Rectangle(0, 0, 0, 0);
-            }
-
-            return new Rectangle(xOverlap.getStartPoint(), yOverlap.getStartPoint(), xOverlap.getLength(), yOverlap.getLength());
-        }
-
-        static class RangeOverlap {
-
-            private int startPoint;
-
-            private int length;
-
-            RangeOverlap(int startPoint, int length) {
-                this.startPoint = startPoint;
-                this.length = length;
-            }
-
-            int getStartPoint() {
-                return startPoint;
-            }
-
-            int getLength() {
-                return length;
-            }
-
-        }
-
     }
 
     // TODO: 1/24/2018 Write unit tests
@@ -658,19 +532,6 @@ class InterviewCake {
         }
 
         return uniqueDeliveryId;
-    }
-
-    static class CakeType {
-
-        private int weight;
-
-        private int value;
-
-        CakeType(int weight, int value) {
-            this.weight = weight;
-            this.value = value;
-        }
-
     }
 
     // TODO: 2/8/2018 Write unit tests
@@ -720,6 +581,19 @@ class InterviewCake {
         // 2. A cake that's both heavier and worth less than another cake would never be in the optimal solution.
         // this idea is called 'dominance relations'. Can you apply this idea to save some time?
         return maxValuesAtCapacities[weightCapacity];
+    }
+
+    private static class CakeType {
+
+        private int weight;
+
+        private int value;
+
+        CakeType(int weight, int value) {
+            this.weight = weight;
+            this.value = value;
+        }
+
     }
 
     // TODO: 2/21/2018 Write unit tests
@@ -853,39 +727,6 @@ class InterviewCake {
         return openersStack.empty();
     }
 
-    static class BinaryTreeNode {
-
-        int value;
-
-        BinaryTreeNode leftNode;
-
-        BinaryTreeNode rightNode;
-
-        BinaryTreeNode(int value) {
-            this.value = value;
-        }
-
-        BinaryTreeNode insertLeftNode(int value) {
-            this.leftNode = new BinaryTreeNode(value);
-            return this.leftNode;
-        }
-
-        BinaryTreeNode insertRightNode(int value) {
-            this.rightNode = new BinaryTreeNode(value);
-            return this.rightNode;
-        }
-
-    }
-
-    private int findLargest(BinaryTreeNode rootNode) {
-        BinaryTreeNode currentNode = rootNode;
-        while (currentNode.rightNode != null) {
-            currentNode = currentNode.rightNode;
-        }
-
-        return currentNode.value;
-    }
-
     // TODO: 3/28/2018 Write unit tests
     /**
      * @see <a href="https://www.interviewcake.com/question/java/second-largest-item-in-bst">Source</a>
@@ -901,24 +742,33 @@ class InterviewCake {
      * O(h) where h is the height of the tree (that's O(lgn) if the tree is balanced, O(n) otherwise) and O(1) space.
      */
     int findSecondLargest(BinaryTreeNode rootNode) {
-        if (rootNode == null || (rootNode.leftNode == null && rootNode.rightNode == null)) {
+        if (rootNode == null || (rootNode.getLeftNode() == null && rootNode.getRightNode() == null)) {
             throw new IllegalArgumentException("Tree must have at least 2 nodes");
         }
 
         BinaryTreeNode currentNode = rootNode;
         while (true) {
             // case: current is largest and has a left subtree => 2nd largest is the largest in that subtree
-            if (currentNode.leftNode != null && currentNode.rightNode == null) {
-                return findLargest(currentNode.leftNode);
+            if (currentNode.getLeftNode() != null && currentNode.getRightNode() == null) {
+                return findLargest(currentNode.getLeftNode());
             }
 
             // case: current is parent of largest, and largest has no children, so current is 2nd largest
-            if (currentNode.rightNode != null && (currentNode.rightNode.leftNode == null && currentNode.rightNode.rightNode == null)) {
-                return currentNode.value;
+            if (currentNode.getRightNode() != null && (currentNode.getRightNode().getLeftNode() == null && currentNode.getRightNode().getRightNode() == null)) {
+                return currentNode.getValue();
             }
 
-            currentNode = currentNode.rightNode;
+            currentNode = currentNode.getRightNode();
         }
+    }
+
+    private int findLargest(BinaryTreeNode rootNode) {
+        BinaryTreeNode currentNode = rootNode;
+        while (currentNode.getRightNode() != null) {
+            currentNode = currentNode.getRightNode();
+        }
+
+        return currentNode.getValue();
     }
 
     // TODO: 5/23/2018 Write unit tests
@@ -949,7 +799,7 @@ class InterviewCake {
             int depth = current.depth;
 
             // case: we found a leaf
-            if (node.leftNode == null && node.rightNode == null) {
+            if (node.getLeftNode() == null && node.getRightNode() == null) {
                 // we only care if it's a new depth
                 if (!depths.contains(depth)) {
                     depths.add(depth);
@@ -963,12 +813,12 @@ class InterviewCake {
                 }
             // case: this isn't a leaf - keep stepping down
             } else {
-                if (node.leftNode != null) {
-                    nodes.push(new NodeDepthPair(node.leftNode, depth + 1));
+                if (node.getLeftNode() != null) {
+                    nodes.push(new NodeDepthPair(node.getLeftNode(), depth + 1));
                 }
 
-                if (node.rightNode != null) {
-                    nodes.push(new NodeDepthPair(node.rightNode, depth + 1));
+                if (node.getRightNode() != null) {
+                    nodes.push(new NodeDepthPair(node.getRightNode(), depth + 1));
                 }
             }
         }
@@ -997,18 +847,18 @@ class InterviewCake {
             int upperBound = nodeBounds.upperBound;
 
             // if this node is invalid, we return false right away
-            if (node.value <= lowerBound || node.value >= upperBound) {
+            if (node.getValue() <= lowerBound || node.getValue() >= upperBound) {
                 return false;
             }
 
-            if (node.leftNode != null) {
+            if (node.getLeftNode() != null) {
                 // this node must be less than the current node
-                nodeBoundsStack.push(new NodeBounds(node.leftNode, lowerBound, node.value));
+                nodeBoundsStack.push(new NodeBounds(node.getLeftNode(), lowerBound, node.getValue()));
             }
 
-            if (node.rightNode != null) {
+            if (node.getRightNode() != null) {
                 // this node must be greater than the current node
-                nodeBoundsStack.push(new NodeBounds(node.rightNode, node.value, upperBound));
+                nodeBoundsStack.push(new NodeBounds(node.getRightNode(), node.getValue(), upperBound));
             }
         }
 
@@ -1025,11 +875,11 @@ class InterviewCake {
             return true;
         }
 
-        if (rootNode.value >= upperBound || rootNode.value <= lowerBound) {
+        if (rootNode.getValue() >= upperBound || rootNode.getValue() <= lowerBound) {
             return false;
         }
 
-        return isBSTRecursive(rootNode.leftNode, lowerBound, rootNode.value) && isBSTRecursive(rootNode.rightNode, rootNode.value, upperBound);
+        return isBSTRecursive(rootNode.getLeftNode(), lowerBound, rootNode.getValue()) && isBSTRecursive(rootNode.getRightNode(), rootNode.getValue(), upperBound);
     }
 
     private static class NodeDepthPair {
@@ -1057,46 +907,6 @@ class InterviewCake {
             this.node = node;
             this.lowerBound = lowerBound;
             this.upperBound = upperBound;
-        }
-
-    }
-
-    static class GraphNode {
-
-        private String label;
-
-        private Set<GraphNode> neighbours;
-
-        private Optional<String> color;
-
-        GraphNode(String label) {
-            this.label = label;
-            neighbours = new HashSet<>();
-            color = Optional.empty();
-        }
-
-        String getLabel() {
-            return label;
-        }
-
-        boolean hasColor() {
-            return color.isPresent();
-        }
-
-        String getColor() {
-            return color.get();
-        }
-
-        void setColor(String color) {
-            this.color = Optional.ofNullable(color);
-        }
-
-        Set<GraphNode> getNeighbours() {
-            return Collections.unmodifiableSet(neighbours);
-        }
-
-        void setNeighbours(GraphNode neighbour) {
-            neighbours.add(neighbour);
         }
 
     }
