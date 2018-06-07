@@ -1061,4 +1061,25 @@ class InterviewCake {
 
     }
 
+    // TODO: 6/7/2018 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/simulate-5-sided-die">Source</a>
+     * The fundamental theorem of arithmetic.
+     * Worst-case O(∞) time (we might keep re-rolling forever) and O(1) space.
+     */
+    int rand5() {
+        int result = 7; // arbitrarily large
+        while (result > 5) {
+            result = rand7();
+        }
+
+        return result;
+    }
+
+    private int rand7() {
+        // generates a random integer from 1 to 7
+        // FIXME: 6/7/2018 Returns each integer with equal probability
+        return new Random().nextInt(7);
+    }
+
 }
