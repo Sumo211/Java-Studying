@@ -1070,16 +1070,45 @@ class InterviewCake {
     int rand5() {
         int result = 7; // arbitrarily large
         while (result > 5) {
-            result = rand7();
+            result = fakeRand7();
         }
 
         return result;
     }
 
-    private int rand7() {
+    private int fakeRand7() {
         // generates a random integer from 1 to 7
         // FIXME: 6/7/2018 Returns each integer with equal probability
         return new Random().nextInt(7);
+    }
+
+    // TODO: 6/18/2018 Write unit tests
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/simulate-7-sided-die">Source</a>
+     * Every integer can be expressed as a product of prime numbers (its prime factorization). Every integer has only one prime factorization.
+     * In fact, it's impossible to have true randomness and non-infinite worst-case runtime.
+     * Worst-case O(∞) time (we might keep re-rolling forever) and O(1) space.
+     */
+    int rand7() {
+        while (true) {
+            // do our die rolls
+            int roll1 = fakeRand5();
+            int roll2 = fakeRand5();
+
+            int outcome = (roll1 - 1) * 5 + (roll2 - 1) + 1;
+
+            // if we hit an extraneous outcome we just re-roll
+            if (outcome > 21) continue;
+
+            // our outcome was fine. return it!
+            return outcome % 7 + 1;
+        }
+    }
+
+    private int fakeRand5() {
+        // generates a random integer from 1 to 5
+        // FIXME: 6/18/2018 Returns each integer with equal probability
+        return new Random().nextInt(5);
     }
 
 }
