@@ -132,4 +132,12 @@ public class InterviewCakeTest {
         assertTrue(interviewCake.isBinarySearchTree(root));
     }
 
+    @Test
+    public void testHasPalindromePermutation_OK() {
+        assertTrue(interviewCake.hasPalindromePermutation("civic"));
+        assertTrue(interviewCake.hasPalindromePermutation("ivicc"));
+        assertFalse(interviewCake.hasPalindromePermutation("civil"));
+        assertFalse(interviewCake.hasPalindromePermutation("livci"));
+    }
+
 }

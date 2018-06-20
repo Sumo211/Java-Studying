@@ -1111,4 +1111,27 @@ class InterviewCake {
         return new Random().nextInt(5);
     }
 
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/permutation-palindrome">Source</a>
+     * Spend some extra time ensuring you fully understand the question before starting. Jumping in with a flawed understanding of the problem doesn't look good in an interview.
+     * We could use the somewhat-common 'keep two pointers' pattern.
+     * Using a hash map or hash set is the most common way to get from a brute force approach to something more clever. It should always be your first thought.
+     * So always ask yourself, right from the start: 'Can I save time by using a hash map?'
+     */
+    boolean hasPalindromePermutation(String input) {
+        // track characters we've seen an odd number of times
+        Set<Character> unpairedCharacters = new HashSet<>();
+        for (char c : input.toCharArray()) {
+            if (unpairedCharacters.contains(c)) {
+                unpairedCharacters.remove(c);
+            } else {
+                unpairedCharacters.add(c);
+            }
+        }
+
+        // the string has a palindrome permutation if it
+        // has one or zero characters without a pair
+        return unpairedCharacters.size() <= 1;
+    }
+
 }
