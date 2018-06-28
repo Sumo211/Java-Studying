@@ -1117,6 +1117,7 @@ class InterviewCake {
      * We could use the somewhat-common 'keep two pointers' pattern.
      * Using a hash map or hash set is the most common way to get from a brute force approach to something more clever. It should always be your first thought.
      * So always ask yourself, right from the start: 'Can I save time by using a hash map?'
+     * O(n) time, since we're making one iteration through the n characters in the string. Space cost is O(n) as well.
      */
     boolean hasPalindromePermutation(String input) {
         // track characters we've seen an odd number of times
@@ -1132,6 +1133,30 @@ class InterviewCake {
         // the string has a palindrome permutation if it
         // has one or zero characters without a pair
         return unpairedCharacters.size() <= 1;
+    }
+
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/matching-parens">Source</a>
+     * So next time you get a parsing question, one of your first thoughts should be 'use a stack!'
+     * O(n) time, where n is the number of chars in the string. O(1) space.
+     */
+    int getClosingParen(String input, int openingParenIndex) {
+        int openNestedParens = 0;
+
+        for (int position = openingParenIndex + 1; position < input.length(); position++) {
+            char c = input.charAt(position);
+            if (c == '(') {
+                openNestedParens++;
+            } else if (c == ')') {
+                if (openNestedParens == 0) {
+                    return position;
+                } else {
+                    openNestedParens--;
+                }
+            }
+        }
+
+        throw new IllegalArgumentException("No closing parenthesis :(");
     }
 
 }

@@ -140,4 +140,10 @@ public class InterviewCakeTest {
         assertFalse(interviewCake.hasPalindromePermutation("livci"));
     }
 
+    @Test
+    public void testGettingClosingParen_OK() {
+        String input = "Sometimes (when I nest them (my parentheticals) too much (like this (and this))) they get confusing.";
+        assertEquals(79, interviewCake.getClosingParen(input, 10));
+    }
+
 }
