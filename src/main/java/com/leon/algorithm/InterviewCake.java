@@ -1159,4 +1159,34 @@ class InterviewCake {
         throw new IllegalArgumentException("No closing parenthesis :(");
     }
 
+    /**
+     * @see <a href="https://www.interviewcake.com/question/java/recursive-string-permutations">Source</a>
+     * Sometimes it helps to think of algorithm design as a two-part process:
+     * - first figure out how you would solve the problem 'by hand', as though the input was a stack of paper on a desk in front of you.
+     * - then translate that process into code.
+     */
+    Set<String> getPermutations(String input) {
+        // base case
+        if (input.length() <= 1) {
+            return new HashSet<>(Collections.singletonList(input));
+        }
+
+        String allCharsExceptLast = input.substring(0, input.length() - 1);
+        char lastChar = input.charAt(input.length() - 1);
+
+        // recursive call: get all possible permutations for all chars except last
+        Set<String> permutationsOfAllCharsExceptLast = getPermutations(allCharsExceptLast);
+
+        // put the last char in all possible positions for each of the above permutations
+        Set<String> permutations = new HashSet<>();
+        for (String permutationOfAllCharsExceptLast : permutationsOfAllCharsExceptLast) {
+            for (int position = 0; position <= allCharsExceptLast.length(); position++) {
+                String permutation = permutationOfAllCharsExceptLast.substring(0, position) + lastChar + permutationOfAllCharsExceptLast.substring(position);
+                permutations.add(permutation);
+            }
+        }
+
+        return permutations;
+    }
+
 }

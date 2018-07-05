@@ -146,4 +146,10 @@ public class InterviewCakeTest {
         assertEquals(79, interviewCake.getClosingParen(input, 10));
     }
 
+    @Test
+    public void testGettingPermutations_OK() {
+        String input = "cat";
+        assertEquals(6, interviewCake.getPermutations(input).size());
+    }
+
 }
