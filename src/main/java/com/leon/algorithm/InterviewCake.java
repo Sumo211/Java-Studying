@@ -129,6 +129,7 @@ class InterviewCake {
      * 1. We started with an O(n^2) 'brute force' solution and wondered if we could do better.
      * 2. We knew to beat O(n^2) we'd probably do O(n) or O(nlgn), so we started thinking of ways we might get an O(nlgn) runtime.
      * 3. lg(n) usually comes from iteratively cutting stuff in half, so we arrived at the final algorithm by exploring that idea.
+     * Starting with a target runtime and working backward from there can be a powerful strategy for all kinds of coding interview questions.
      * O(nlgn) time and O(1) space
      */
     int findFirstRepeatedNumber(int[] input) {
