@@ -59,11 +59,11 @@ public class App {
     @SneakyThrows(value = {SQLException.class, IOException.class})
     private static long importUsingMemory(File source, List<String> requiredCols) {
         Connection connection = CustomDataSource.getConnection();
-        CopyManager copier = new CopyManager(connection.unwrap(BaseConnection.class));
 
-        long copied = 0;
-        String copyQuery = String.format("COPY %s.%s (%s) FROM STDIN CSV HEADER", "ingestor", "gtfs_calendar_dates", getHeaders(requiredCols));
-        try (BufferedReader reader = new BufferedReader(new FileReader(source))) {
+        try (connection; BufferedReader reader = new BufferedReader(new FileReader(source))) {
+            CopyManager copier = new CopyManager(connection.unwrap(BaseConnection.class));
+            long copied = 0;
+            String copyQuery = String.format("COPY %s.%s (%s) FROM STDIN CSV HEADER", "ingestor", "gtfs_calendar_dates", getHeaders(requiredCols));
             int counter = 0;
             StringBuilder builder = new StringBuilder();
             for (CSVRecord record : CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(reader)) {
@@ -87,25 +87,21 @@ public class App {
 
             copied += copier.copyIn(copyQuery, new ByteArrayInputStream(builder.toString().getBytes()));
             return copied;
-        } finally {
-            connection.close();
         }
     }
 
     @SneakyThrows(value = {SQLException.class, IOException.class})
     private static long importUsingFile(File source, List<String> requiredCols) {
         Connection connection = CustomDataSource.getConnection();
-        CopyManager copier = new CopyManager(connection.unwrap(BaseConnection.class));
 
-        long copied;
-        String copyQuery = String.format("COPY %s.%s (%s) FROM STDIN CSV HEADER", "ingestor", "gtfs_calendar_dates", getHeaders(requiredCols));
-        try (BufferedReader reader = new BufferedReader(new FileReader(source))) {
+        try (connection; BufferedReader reader = new BufferedReader(new FileReader(source))) {
+            CopyManager copier = new CopyManager(connection.unwrap(BaseConnection.class));
+            long copied;
+            String copyQuery = String.format("COPY %s.%s (%s) FROM STDIN CSV HEADER", "ingestor", "gtfs_calendar_dates", getHeaders(requiredCols));
             copied = copier.copyIn(copyQuery, reader);
             System.out.println("Finished " + source.getName() + " at " + LocalDateTime.now());
 
             return copied;
-        } finally {
-            connection.close();
         }
     }
 
