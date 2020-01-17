@@ -1,0 +1,38 @@
+[
+  {
+    "loginName": "dav1hc",
+    "reportTo": "yth2nt"
+  },
+  {
+    "loginName": "yth2nt",
+    "reportTo": "nlv3ut"
+  },
+  {
+    "loginName": "nlv3ut",
+    "reportTo": "tre4uc"
+  },
+  {
+    "loginName": "thf1vb",
+    "reportTo": "rty2hb"
+  },
+  {
+    "loginName": "rty2hb",
+    "reportTo": "mul3ut"
+  },
+  {
+    "loginName": "mul3ut",
+    "reportTo": "ocb4uc"
+  },
+  {
+    "loginName": "uio1hc",
+    "reportTo": "tyy2hc"
+  },
+  {
+    "loginName": "tyy2hc",
+    "reportTo": "mlv31t"
+  },
+  {
+    "loginName": "mlv31t",
+    "reportTo": "tuo4tj"
+  }
+]

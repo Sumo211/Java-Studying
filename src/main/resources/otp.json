@@ -1,0 +1,348 @@
+{
+  "data": {
+    "stop": {
+      "gtfsId": "1:8503000:0:8",
+      "name": "Zürich HB",
+      "lat": 47.37884521484375,
+      "lon": 8.540193557739258,
+      "cluster": {
+        "gtfsId": "8503000P"
+      },
+      "platformCode": null,
+      "locationType": "STOP",
+      "wheelchairBoarding": "NO_INFORMATION",
+      "routes": [
+        {
+          "type": "102",
+          "shortName": "17-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "75",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "16",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "100",
+          "shortName": "125-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "36",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "46",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "4",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "400",
+          "shortName": "24",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "1-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "30-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "106",
+          "shortName": "142-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "70",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "400",
+          "shortName": "25",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "18-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "3",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "8",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "106",
+          "shortName": "151-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "106",
+          "shortName": "650",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "106",
+          "shortName": "69-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "22-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "106",
+          "shortName": "205-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "17",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "37",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "1-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "106",
+          "shortName": "152-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "100",
+          "shortName": "170-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "46",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "26-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "100",
+          "shortName": "216-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "23-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "64-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "3",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "29-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "400",
+          "shortName": "25",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "13",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "27-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "700",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "75",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "70",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "2",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "7-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "5-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "21-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "12-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "3-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "54-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "8-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "2-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "1",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "106",
+          "shortName": "240-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "20-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "103",
+          "shortName": "75",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "106",
+          "shortName": "71-Y",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "102",
+          "shortName": "2",
+          "color": null,
+          "textColor": null
+        },
+        {
+          "type": "106",
+          "shortName": "239-Y",
+          "color": null,
+          "textColor": null
+        }
+      ]
+    }
+  }
+}
